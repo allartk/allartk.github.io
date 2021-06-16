@@ -1,1 +1,1 @@
-// webpack entry
+import './index.scss';
