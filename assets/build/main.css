@@ -10729,3 +10729,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+}
