@@ -6,6 +6,7 @@ https://allartk.github.io/
 ## Run & build
 
 ```
+npm i
 npm run start
 ```
 

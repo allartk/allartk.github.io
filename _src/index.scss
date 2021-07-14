@@ -1,3 +1,15 @@
-@import "bootstrap";
+@import "scss/variables";
 
-@import "sidebar";
+// vendor
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+@import "bootstrap/scss/root";
+@import "bootstrap/scss/reboot";
+
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+
+//custom
+@import "scss/grid";

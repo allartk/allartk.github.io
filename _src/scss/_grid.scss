@@ -1,0 +1,11 @@
+.main {        
+    margin-left: calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width});
+}
+
+.sidebar-wrapper {
+    position: fixed;
+    top:0;
+    bottom:0;        
+    width: calc((100% - #{$nav-width + $content-width}) / 2 + #{$nav-width});
+    min-width: $nav-width;    
+}
