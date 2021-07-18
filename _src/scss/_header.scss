@@ -1,4 +1,7 @@
 .site-header {
-    height: $header-height;
-    border-bottom: $gray-200 solid 1px;
+  height: $header-height;
+  border-bottom: $gray-200 solid 1px;
+
+  .site-title {
+  }
 }
