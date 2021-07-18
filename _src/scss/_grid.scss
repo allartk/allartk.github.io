@@ -2,6 +2,9 @@
   margin-left: calc(
     (100% - #{$nav-width + $content-width}) / 2 + #{$nav-width}
   );
+  .content {
+    padding: 0 $container-padding-x;
+  }
 }
 
 .sidebar-wrapper {

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>{{ page.title }}</title>
+  <title>allart.github.io - {{ page.title }}</title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,27 +14,27 @@
 </head>
 
 <body class="">
-  <div class="container-fluid">
-    <div class="row">      
-      <nav class="sidebar-wrapper bg-light pt-4">
-        <div class="site-header">
-          <a href="/">Allartk </a>
-        </div>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Demo Maps</a>
-          </li>
-        </ul>
-      </nav>
-      <main class="p-4 main">
-        {{ content }}
-      </main>
+  <div class="sidebar-wrapper bg-light pt-4 d-flex">
+    <div class="site-header">
+      <a class="site-title" href="/">Allartk </a>
     </div>
-
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Demo Maps</a>
+      </li>
+    </ul>
   </div>
+  <main class="main">
+    <div class="site-header">
+
+    </div>
+    <div class="content">
+      {{ content }}
+    </div>
+  </main>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
     integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
     crossorigin="anonymous"></script>

@@ -3,5 +3,10 @@
   border-bottom: $gray-200 solid 1px;
 
   .site-title {
+    font-size: 2em;
+    color: $body-color;
+    text-decoration: none;
+    padding: 0 $container-padding-x;
+    line-height: $header-height;
   }
 }

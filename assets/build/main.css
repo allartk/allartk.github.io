@@ -1884,7 +1884,10 @@ progress {
   }
 }
 .main {
-  margin-left: calc((100% - 1200px) / 2 + 250px);
+  margin-left: calc( (100% - 1200px) / 2 + 250px );
+}
+.main .content {
+  padding: 0 0.75rem;
 }
 
 .sidebar-wrapper {
@@ -1905,4 +1908,11 @@ progress {
 .site-header {
   height: 60px;
   border-bottom: #e9ecef solid 1px;
+}
+.site-header .site-title {
+  font-size: 2em;
+  color: #212529;
+  text-decoration: none;
+  padding: 0 0.75rem;
+  line-height: 60px;
 }

@@ -7,3 +7,6 @@ exclude:
   - package.json
   - package-lock.json
   - webpack.config.js
+  - .prettierrc.json
+  - docker-compose.yml
+  - README.md
