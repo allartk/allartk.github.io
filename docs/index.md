@@ -24,3 +24,4 @@ I love standards that help with it, clean code guides, and various patterns.
 ## Read recommendations
 
 * [Cosmic python](https://www.cosmicpython.com/)
+* [Martin Fowler](https://martinfowler.com/)
