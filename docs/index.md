@@ -11,13 +11,17 @@ Coding over 20 years in various programming languages. Currently mosly focussed 
 * Python (fastapi, sqlalchemy)
 * Postgres and postgis
 * Various geo software
-* Some cloud stuff (eg containers, kubernetes) on azure
+* linux (bash, systemd, mounts, all kinds of configurations etc)
+* Typescript
+* Cloud (eg containers, kubernetes) on azure
+* CI/CD (gitlab, jenkins)
 
 In the past:
 
-* php (symfony, doctrine)
+* php (symfony, doctrine ORM)
+* typescript (react, angular)
 
-But apart from the tools, maybe as important is the way you use them. E.g. clean, readable, maintainable code.
+But apart from knowing tools and how to solve problems with them, is clean, readable, maintainable code.
 
 I love standards that help with it, clean code guides, and various patterns.
 

@@ -9,5 +9,6 @@ python -m venv venv
 . venv/bin/activate
 # install / update
 pip install -r requirements.txt
-
+mkdocs serve
+mkdocs gh-deploy
 ```

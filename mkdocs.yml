@@ -2,3 +2,5 @@ site_name: allartk.github.io
 site_url: https://allartk.github.io
 theme:
   name: material
+plugins:
+  - blog
