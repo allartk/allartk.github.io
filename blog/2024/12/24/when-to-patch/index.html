@@ -8,13 +8,11 @@
       
       
       
-        <link rel="canonical" href="https://allartk.github.io/blog/2024/11/29/horrible-schema-names-in-fastapi/">
+        <link rel="canonical" href="https://allartk.github.io/blog/2024/12/24/when-to-patch/">
       
       
-        <link rel="prev" href="../../28/loading-big-data-fixtures-showing-progress/">
+        <link rel="prev" href="../../../11/29/horrible-schema-names-in-fastapi/">
       
-      
-        <link rel="next" href="../../../12/24/when-to-patch/">
       
       
       <link rel="icon" href="../../../../../assets/images/favicon.png">
@@ -22,7 +20,7 @@
     
     
       
-        <title>Horrible schema names in fastapi - allartk.github.io</title>
+        <title>When to patch - allartk.github.io</title>
       
     
     
@@ -64,7 +62,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#horrible-schema-names-in-fastapi" class="md-skip">
+        <a href="#when-to-patch" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Horrible schema names in fastapi
+              When to patch
             
           </span>
         </div>
@@ -363,7 +361,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
-                        <time datetime="2024-11-29 00:00:00+00:00" class="md-ellipsis">November 29, 2024</time>
+                        <time datetime="2024-12-24 00:00:00+00:00" class="md-ellipsis">December 24, 2024</time>
                       </div>
                     </li>
                     
@@ -395,36 +393,38 @@
         
 
 
-<h1 id="horrible-schema-names-in-fastapi">Horrible schema names in fastapi</h1>
-<p>Reusing pyndantic models with usage of <a href="https://mypy.readthedocs.io/en/stable/generics.html">type generics</a> can cause horrible schema names
-in the resulting openapi spec.</p>
-<p>This will show in your openapi spec as a schema named <code>ResponseList_MyResponse_MyMetaResponse_</code>:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/myroute&quot;</span><span class="p">)</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">myroute</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">ResponseList</span><span class="p">[</span><span class="n">MyResponse</span><span class="p">,</span> <span class="n">MyMetaResponse</span><span class="p">]:</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">return</span> <span class="n">Responselist</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">MyResponse</span><span class="p">(),</span> <span class="n">meta</span><span class="o">=</span><span class="n">MyMetaResponse</span><span class="p">())</span>
+<h1 id="when-to-patch">When to patch</h1>
+<p>The <a href="https://docs.python.org/3/library/unittest.mock.html#patch">patch method</a> of
+the <a href="https://docs.python.org/3/library/unittest.mock.html#">unittest.mock</a> library has excellent documentation how it
+works.</p>
+<p>Recently a co-worker asked me, when to use it.</p>
+<p>Patching is something to use with <a href="https://martinfowler.com/bliki/UnitTest.html">unit tests</a>, or more specific:</p>
+<ul>
+<li>When you only want to test function/class/method A, and not the other functions/classes used inside A, you should patch</li>
+</ul>
+<div class="language-python highlight"><span class="filename">test_unit.py</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span> <span class="nc">TestCsvWriteFactory</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="nd">@patch</span><span class="p">(</span><span class="s2">&quot;app.download.service.generator.csv&quot;</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span> <span class="nf">test_csv_writer_factory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mock_csv</span><span class="p">:</span> <span class="n">MagicMock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Patch the csv module, so it is not called and excluded from the test, </span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">        but assert it&#39;s write method is called</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">csv_writer_factory</span><span class="p">()</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">mock_csv</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
 </span></code></pre></div>
-<p>A quick fix can be add a definition of a model that extends your reusable base model.</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span> <span class="nc">ResponseList</span><span class="p">[</span><span class="n">Data</span><span class="p">,</span> <span class="n">Meta</span><span class="p">](</span><span class="n">BaseModel</span><span class="p">):</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Data</span><span class="p">]</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">meta</span><span class="p">:</span> <span class="n">Meta</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">class</span> <span class="nc">MyResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>    
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+<div class="language-python highlight"><span class="filename">unit.py</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span> <span class="nn">csv</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">def</span> <span class="nf">csv_writer_factory</span><span class="p">():</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="k">class</span> <span class="nc">FileLike</span><span class="p">:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;An object that implements just the write method of the file-like</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="sd">        interface.</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">class</span> <span class="nc">MyMetaResponse</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>    
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">copyright</span><span class="p">:</span> <span class="nb">str</span>    
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="k">class</span> <span class="nc">MyListResponse</span><span class="p">(</span>
-</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">ResponseList</span><span class="p">[</span><span class="n">MyResponse</span><span class="p">,</span> <span class="n">MyMetaResponse</span><span class="p">]</span>
-</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="p">):</span>
-</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">pass</span>
-</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
-</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nd">@router</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/myroute&quot;</span><span class="p">)</span>
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">myroute</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">MyListResponse</span><span class="p">:</span>
-</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="k">return</span> <span class="n">MyListResponse</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">MyResponse</span><span class="p">()],</span> <span class="n">meta</span><span class="o">=</span><span class="n">MyMetaResponse</span><span class="p">())</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;Write the value by returning it&quot;&quot;&quot;</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>            <span class="k">return</span> <span class="n">value</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="k">return</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">FileLike</span><span class="p">(),</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">,</span> <span class="n">quotechar</span><span class="o">=</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
 </span></code></pre></div>
 
 
